@@ -53,11 +53,11 @@ class ComplexNumber:
 
     def __str__(self):
         if self._saved_as == 1:
-            return "(" + str(self._rect.real) + "," + str(self._rect.imag) + ")"
+            return "(" + str(self._rect.real) + ", " + str(self._rect.imag) + ")"
         elif self._saved_as == 2:
-            return "[" + str(self._abs) + "," + str(self._pi_mult) + "π]"
+            return "[" + str(self._abs) + ", " + str(self._pi_mult) + "π]"
         else:
-            return "[" + str(self._abs) + "," + str(self._phase) + "]"
+            return "[" + str(self._abs) + ", " + str(self._phase) + "]"
 
     #Getter, se asignan de manera lazy excepto pi_mult, porque no hay manera de calcularlo si no te lo dan de una
     def real(self):

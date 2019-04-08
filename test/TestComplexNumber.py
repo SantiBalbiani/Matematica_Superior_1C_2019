@@ -23,6 +23,36 @@ class TestComplexNumber(unittest.TestCase):
         self.assertEqual(cn.phase(), 0.25)
         self.assertIsNone(cn.pi_mult())
 
+    def test_pi_creation_second_positive_round(self):
+        cn = ComplexNumber.polar_with_pi(4, 2.25)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.pi_mult(), 0.25)
+
+    def test_pi_creation_first_negative_round(self):
+        cn = ComplexNumber.polar_with_pi(4, -1.75)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.pi_mult(), 0.25)
+
+    def test_pi_creation_second_negative_round(self):
+        cn = ComplexNumber.polar_with_pi(4, -3.75)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.pi_mult(), 0.25)
+
+    def test_polar_creation_second_positive_round(self):
+        cn = ComplexNumber.polar_with_decimal(4, 0.25 + FULL_ROUND)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.phase(), 0.25)
+
+    def test_polar_creation_first_negative_round(self):
+        cn = ComplexNumber.polar_with_decimal(4, 0.25 - FULL_ROUND)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.phase(), 0.25)
+
+    def test_polar_creation_second_negative_round(self):
+        cn = ComplexNumber.polar_with_decimal(4, 0.25 - 2 * FULL_ROUND)
+        self.assertEqual(cn.abs(), 4)
+        self.assertEqual(cn.phase(), 0.25)
+
     def test_binomial_to_polar_first_quadrant(self):
         cn = ComplexNumber.binomial(5.40, 8.41)
         self.assertAlmostEqual(cn.abs(), 10, delta=0.1)
@@ -87,3 +117,14 @@ class TestComplexNumber(unittest.TestCase):
         self.assertAlmostEqual(cn.real(), -5.40, delta=0.054)
         self.assertAlmostEqual(cn.imaginary(), -8.41, delta=0.0841)
 
+    def test_binomial_string(self):
+        cn = ComplexNumber.binomial(1, 3)
+        self.assertEqual(str(cn), "(1.0, 3.0)")
+
+    def test_pi_string(self):
+        cn = ComplexNumber.polar_with_pi(1, 0.25)
+        self.assertEqual(str(cn), "[1, 0.25π]")
+
+    def test_phase_string(self):
+        cn = ComplexNumber.polar_with_decimal(1, 1)
+        self.assertEqual(str(cn), "[1, 1]")

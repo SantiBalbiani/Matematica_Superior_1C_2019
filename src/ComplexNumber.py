@@ -1,16 +1,15 @@
-from cmath import *
+from math import *
 
 FULL_ROUND = pi * 2
 
 #Error esperado de conversion: 1%
 #(En realidad creo que es bastante menos, pero yo me considero feliz con 1%)
 
-#Estuve vago y por eso tengo coordenadas cart. en lugar de _real y _imaginary,
-#pero mi idea era usar esos para calcularlos lazy por separado
-
 
 class ComplexNumber:
     _rect = None
+    _real = None
+    _imag = None
     _abs = None
     _pi_mult = None
     _phase = None
@@ -19,7 +18,8 @@ class ComplexNumber:
     def __init__(self, a, b, form):
         self._saved_as = form
         if form == 1:
-            self._rect = complex(a, b)
+            self._real = a
+            self._imag = b
         elif form == 2:
             self._abs = a
             self._pi_mult = b
@@ -53,7 +53,7 @@ class ComplexNumber:
 
     def __str__(self):
         if self._saved_as == 1:
-            return "(" + str(self._rect.real) + ", " + str(self._rect.imag) + ")"
+            return "(" + str(self._real) + ", " + str(self._imag) + ")"
         elif self._saved_as == 2:
             return "[" + str(self._abs) + ", " + str(self._pi_mult) + "π]"
         else:
@@ -61,14 +61,14 @@ class ComplexNumber:
 
     #Getter, se asignan de manera lazy excepto pi_mult, porque no hay manera de calcularlo si no te lo dan de una
     def real(self):
-        if self._rect is None:
-            self._set_rect()
-        return self._rect.real
+        if self._real is None:
+            self._set_real()
+        return self._real
 
     def imaginary(self):
-        if self._rect is None:
-            self._set_rect()
-        return self._rect.imag
+        if self._imag is None:
+            self._set_imag()
+        return self._imag
 
     def abs(self):
         if self._abs is None:
@@ -85,11 +85,11 @@ class ComplexNumber:
 
     # Metodos privados para settear los valores de los atributos
     def _set_abs(self):
-        self._abs = abs(self._rect)
+        self._abs = sqrt(pow(self._real, 2) + pow(self._imag, 2))
 
     def _set_phase(self):
         if self._pi_mult is None:
-            self._phase = phase(self._rect)
+            self._phase = atan2(self._imag, self._real)
             # Python devuelve el angulo con valores entre [0, pi] si el valor imaginario es positivo
             # y entre [-pi, 0] si es negativo, este if lo modifica para que siempre en la primera vuelta +
             if self._phase < 0:
@@ -97,5 +97,8 @@ class ComplexNumber:
         else:
             self._phase = self._pi_mult * pi
 
-    def _set_rect(self):
-        self._rect = rect(self.abs(), self.phase())
+    def _set_real(self):
+        self._real = self.abs() * cos(self.phase())
+
+    def _set_imag(self):
+        self._imag = self.abs() * sin(self.phase())

@@ -117,9 +117,13 @@ class TestComplexNumber(unittest.TestCase):
         self.assertAlmostEqual(cn.real(), -5.40, delta=0.054)
         self.assertAlmostEqual(cn.imaginary(), -8.41, delta=0.0841)
 
-    def test_binomial_string(self):
+    def test_binomial_string_integer(self):
         cn = ComplexNumber.binomial(1, 3)
-        self.assertEqual(str(cn), "(1.0, 3.0)")
+        self.assertEqual(str(cn), "(1, 3)")
+
+    def test_binomial_string_float(self):
+        cn = ComplexNumber.binomial(1.0, 3.125)
+        self.assertEqual(str(cn), "(1.0, 3.125)")
 
     def test_pi_string(self):
         cn = ComplexNumber.polar_with_pi(1, 0.25)

@@ -7,16 +7,14 @@ FULL_ROUND = pi * 2
 
 
 class ComplexNumber:
-    _rect = None
-    _real = None
-    _imag = None
-    _abs = None
-    _pi_mult = None
-    _phase = None
-    _saved_as = None
 
     def __init__(self, a, b, form):
         self._saved_as = form
+        self._real = None
+        self._imag = None
+        self._abs = None
+        self._pi_mult = None
+        self._phase = None
         if form == 1:
             self._real = a
             self._imag = b

@@ -46,6 +46,7 @@ class ComplexNumber:
         if 0 > phase or phase >= FULL_ROUND:
             phase %= FULL_ROUND
         return cls(abs, phase, 3)
+    
 
     #Funciones internas de python para que se imprima lindo
     def __repr__(self):

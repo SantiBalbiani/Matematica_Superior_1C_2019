@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from cmath import *
 import tkinter as tk
+from src.ComplexNumber import ComplexNumber as cn
+import re
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -21,15 +23,53 @@ class Application(tk.Frame):
         self.ingresoCampo2.pack(side="top")
         self.suma = tk.Button(self)
         self.suma["text"] = "Sumar"
-        self.suma["command"] = self.sumar
+        self.suma["command"] = self.realizarOperacion
         self.suma.pack(side="top")
-        self.quit = tk.Button(self, text="Salir", fg="red",
-                              command=self.master.destroy)
+        self.quit = tk.Button(self, text="Salir", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
-    def sumar(self):
-        suma =  complex(self.ingresoCampo1.get()) + complex(self.ingresoCampo2.get())
-        print(suma)
+    
+        
+    
+    def realizarOperacion(self):
+        self.validarEstructuraExternaComplejo(self.ingresoCampo1.get())
+        self.validarEstructuraExternaComplejo(self.ingresoCampo2.get())
+    #   get_complex_from_entry(self.ingresoCampo1.get())
+    #   get_complex_from_entry(self.ingresoCampo2.get())
+            
+       # suma =  complex(self.ingresoCampo1.get()) + complex(self.ingresoCampo2.get())
+       # print(suma)
+            
+        
+    def validarEstructuraExternaComplejo(self,complejoIngresado):
+        primerCaracter = complejoIngresado[0]
+        ultimoCaracter = complejoIngresado[-1]
+        print(primerCaracter)
+        print(ultimoCaracter)
+        if primerCaracter == "[" and ultimoCaracter == "]":
+            print("Forma polar detectada.")
+                #validarComplejoPolar(complejoIngresado)
+        elif primerCaracter == "(" and ultimoCaracter == ")":
+            print("Forma binómica detectada.")
+                #validarComplejoBinomica(complejoIngresado)
+        else:
+            print("Formato incorrecto.")
+    
+  #  def validarComplejoPolar(self,complejoIngresado):
+  #  def validarComplejoBinomica(self,complejoIngresado):
+    
+    def get_complex_from_entry(self,complejoIngresado):
+      tieneMultiploPi = self.contains_pi(complejoIngresado)
+      if tieneMultiploPi is True:
+     #  instanciaComplejo = cn.polarWithDecimal()
+          
+    
+    def contains_pi(self,complejoEnString): 
+        resultado = re.search("π", complejoEnString)
+        if resultado is not None:
+            return True
+        else:
+            return False
         
 root = tk.Tk()
 app = Application(master=root)

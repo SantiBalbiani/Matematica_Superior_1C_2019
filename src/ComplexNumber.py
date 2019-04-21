@@ -101,3 +101,11 @@ class ComplexNumber:
 
     def _set_imag(self):
         self._imag = self.abs() * sin(self.phase())
+
+    # Retorna una string con el formato opuesto al que se creo
+    def str_change_form(self):
+        if self._saved_as == 1:
+            return "[" + str(self._abs) + ", " + str(self._phase) + "]"
+        else:
+            return "(" + str(self._real) + ", " + str(self._imag) + ")"
+

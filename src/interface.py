@@ -1,4 +1,5 @@
 from tkinter import *
+from src.ComplexNumber import *
 
 
 class Interface:
@@ -7,6 +8,9 @@ class Interface:
         raiz = Tk()
 
         cls._frame_ = Frame()
+        cls._complex1_ = None
+        cls._complex2_ = None
+        cls._result_label_ = None
         menu = Menu(raiz)
         raiz.config(menu=menu)
         raiz.config(width="650", height="400")
@@ -38,26 +42,29 @@ class Interface:
         titulo = Label(f, text="Ingresar los datos"'\n')  # label y su ubicacion
         titulo.place(x=0, y=0)
         texto = Label(f, text="Numero")
-        campo = Entry(f)
-        campo.place(x=70, y=25)
+        cls._complex1_ = Entry(f)
+        cls._complex1_.place(x=70, y=25)
         botonEnviar = Button(f, text="Tranformar", command=cls.trans)
         botonEnviar.place(x=30, y=90)
+        cls._result_label_ = Label(f, text="")
+        cls._result_label_.place(x=10, y=130)
 
     @classmethod
     def trans(cls):
-        cls.set_frame()
+        complex_s = cls._complex1_.get()
+        complex = get_complex_from_entry(complex_s)
+        cls._result_label_.config(text = "Resultado = " + complex.str_change_form)
+
 
     @classmethod
     def ob(cls):
-        cls.set_frame()
+        None
 
     @classmethod
     def oa(cls):
-        cls.set_frame()
+        None
 
     @classmethod
     def sf(cls):
         None
 
-
-Interface.start()

@@ -1,5 +1,5 @@
 from tkinter import *
-from src.ComplexNumber import *
+from src.ToComplex import *
 
 
 class Interface:
@@ -52,8 +52,12 @@ class Interface:
     @classmethod
     def trans(cls):
         complex_s = cls._complex1_.get()
-        complex = get_complex_from_entry(complex_s)
-        cls._result_label_.config(text = "Resultado = " + complex.str_change_form)
+        try:
+            complex = to_complex(complex_s)
+            result_text = "Resultado = " + str(complex.str_change_form())
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"
+        cls._result_label_.config(text=result_text)
 
 
     @classmethod

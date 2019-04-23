@@ -4,6 +4,10 @@ import tkinter as tk
 from src.ComplexNumber import ComplexNumber as cn
 import re
 
+regexBinomica = r"\(\s*((\d+(\.\d+)??)\s*,\s*(\d+(\.\d+)??))+\s*\)"
+regexPolarSinPi = r"\[\s*((\d+(\.\d+)??)\s*,\s*(\d+(\.\d+)??))+\s*\]"
+regexPolarConPi = r"\[\s*((\d+(\.\d+)??)\s*,\s*((\d+(\.\d+)??)\*\P\i))+\s*\]"
+
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -28,7 +32,15 @@ class Application(tk.Frame):
         self.quit = tk.Button(self, text="Salir", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
+
+    #EXPRESION REGULAR BINOMICA
+    #\(\s*((\d+(\.\d+)??)\s*,\s*(\d+(\.\d+)??))+\s*\)   -> USAR GROUP 2 Y GROUP 4
     
+    #EXPRESION REGULAR POLAR SIN PI FACTOR
+    #\[\s*((\d+(\.\d+)??)\s*,\s*(\d+(\.\d+)??))+\s*\]   -> USAR GROUP 2 Y GROUP 4
+    
+     #EXPRESION REGULAR POLAR CON PI FACTOR
+    #\[\s*((\d+(\.\d+)??)\s*,\s*((\d+(\.\d+)??)\*\P\i))+\s*\]   -> USAR GROUP 2 Y GROUP 5 (SI QUIERO USAR EL PI PARA ALGO GROUP 4)
         
     
     def realizarOperacion(self):
@@ -58,14 +70,14 @@ class Application(tk.Frame):
   #  def validarComplejoPolar(self,complejoIngresado):
   #  def validarComplejoBinomica(self,complejoIngresado):
     
-    def get_complex_from_entry(self,complejoIngresado):
-      tieneMultiploPi = self.contains_pi(complejoIngresado)
-      if tieneMultiploPi is True:
+  #  def get_complex_from_entry(self,complejoIngresado):
+     # tieneMultiploPi = self.contains_pi(complejoIngresado)
+     # if tieneMultiploPi is True:
      #  instanciaComplejo = cn.polarWithDecimal()
           
     
     def contains_pi(self,complejoEnString): 
-        resultado = re.search("π", complejoEnString)
+        resultado = re.search("Pi", complejoEnString)
         if resultado is not None:
             return True
         else:

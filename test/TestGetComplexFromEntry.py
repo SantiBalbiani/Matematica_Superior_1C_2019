@@ -1,7 +1,8 @@
 import unittest
-from tp_mat_sup import Application
+from src.ToComplex import *
 
-class TestGetComplexFromEntry:
+
+class TestGetComplexFromEntry(unittest.TestCase):
 
     def test_correct_binomial_of_ints(self):
         self.set_complex("(1,2)")
@@ -34,4 +35,4 @@ class TestGetComplexFromEntry:
         self.assertEqual(self.complex.phase(), 0.25)
 
     def set_complex(self, string):
-        self.complex = Application.get_complex_from_entry(string)
+        self.complex = to_complex(string)

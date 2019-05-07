@@ -111,43 +111,38 @@ class ComplexNumber:
         else:
             return "(" + str(self.real()) + ", " + str(self.imaginary()) + ")"
             
-    def __add__(self, other): 
-        self.complete_attr(1)
-        other.complete_attr(1)
-        return ComplexNumber.binomial(self._real+other._real, self._imag+other._imag)
+    def __add__(self, other):
+        return ComplexNumber.binomial(self.real()+other.real(), self.imaginary()+other.imaginary())
     
-    def __radd__(self, other): 
-        self.complete_attr(1)
-        other.complete_attr(1)
-        return ComplexNumber.binomial(self._real+other._real, self._imag+other._imag)
+    def __radd__(self, other):
+        return ComplexNumber.binomial(self.real()+other.real(), self.imaginary()+other.imaginary())
     
     def __sub__(self, other):
-        self.complete_attr(1)
-        other.complete_attr(1)
-        return ComplexNumber.binomial(self._real-other._real, self._imag-other._imag)
+        return ComplexNumber.binomial(self.real()-other.real(), self.imaginary()-other.imaginary())
     
     def __mul__(self, other):
-        self.complete_attr(2)
-        other.complete_attr(2)
-        return ComplexNumber.polar_with_decimal(self._abs*other._abs, self._phase+other._phase)
-        
-        # Return en polares
-        # return ComplexNumber.binomial(self._real*other._real-self._imag*other._imag, 
-        #                              self._real*other._imag+self._imag*other._real)
+        #Estoy completamente al tanto de que tira un warning por acceder a una variable protegia
+        #Despues veo de ponerlo mejor
+        #[MATI]
+        if self._saved_as == 1 and other._saved_as == 1:
+            return ComplexNumber.binomial(
+                        self.real()*other.real() - self.imaginary()*other.imaginary(),
+                        self.real()*other.imaginary() + self.imaginary()*other.imaginary())
+        elif self.pi_mult() is not None and other.pi_mult() is not None:
+            return ComplexNumber.polar_with_pi(
+                        self.abs()*other.abs(),
+                        self.pi_mult()+other.pi_mult())
+        else:
+            return ComplexNumber.polar_with_decimal(
+                        self.abs()*other.abs(),
+                        self.phase()+other.phase())
         
     def __truediv__(self, other):
-        self.complete_attr(2)
-        other.complete_attr(2)
-        if other._abs == 0:
-            raise DivideByZero()
-        return ComplexNumber.polar_with_decimal(self._abs/other._abs, self._phase-other._phase)
-        
-    # Este metodo completa los atributos necesarios para la operacion
-    def complete_attr(self,to):
-        if self._saved_as == 1 and to == 2:         # Binomica, completa polares
-            self._set_abs()
-            self._set_phase()
-        elif self._saved_as == 2 and to == 1:       # Polar, completa binomica
-            self._set_real()
-            self._set_imag() 
-            
+        if self.pi_mult() is not None and other.pi_mult() is not None:
+            return ComplexNumber.polar_with_pi(
+                        self.abs()/other.abs(),
+                        self.pi_mult()-other.pi_mult())
+        else:
+            return ComplexNumber.polar_with_decimal(
+                        self.abs()/other.abs(),
+                        self.phase()-other.phase())

@@ -110,6 +110,21 @@ class ComplexNumber:
             return "[" + str(self.abs()) + ", " + str(self.phase()) + "]"
         else:
             return "(" + str(self.real()) + ", " + str(self.imaginary()) + ")"
+
+    #operador == para poder correr test
+    def __eq__(self, other):
+        if not isinstance(other, ComplexNumber):
+            return False
+        elif self._saved_as == 1 and other._saved_as == 1:
+            return self.real() == other.real() and self.imaginary() == other.imaginary()
+        elif self.pi_mult() is not None and other.pi_mult() is not None:
+            return self.abs() == other.abs() and self.pi_mult() == other.pi_mult()
+        else:
+            return self.abs() == other.abs() and self.phase() == other.phase()
+
+    #operador != para poder correr test
+    def __ne__(self, other):
+        return not self == other
             
     def __add__(self, other):
         return ComplexNumber.binomial(self.real()+other.real(), self.imaginary()+other.imaginary())
@@ -138,6 +153,9 @@ class ComplexNumber:
                         self.phase()+other.phase())
         
     def __truediv__(self, other):
+        if other.abs() == 0:
+            raise DivideByZero
+
         if self.pi_mult() is not None and other.pi_mult() is not None:
             return ComplexNumber.polar_with_pi(
                         self.abs()/other.abs(),

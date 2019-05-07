@@ -1,5 +1,6 @@
 from tkinter import *
 from src.ToComplex import *
+from src.ComplexNumber import *
 
 
 class Interface:
@@ -62,7 +63,82 @@ class Interface:
 
     @classmethod
     def ob(cls):
-        None
+        cls.set_frame()
+        f = cls._frame_
+        titulo = Label(f, text="Operaciones Básicas"'\n')  # label y su ubicacion
+        titulo.place(x=0, y=0)
+        texto1 = Label(f, text="Numero 1: ")
+        texto1.place(x=0, y=25)
+        cls._complex1_ = Entry(f)
+        cls._complex1_.place(x=70, y=25)        
+        texto2 = Label(f, text="Numero 2: ")
+        texto2.place(x=0, y=50)
+        cls._complex2_ = Entry(f)
+        cls._complex2_.place(x=70, y=50)
+        botonSumar = Button(f, text="Sumar", command=cls.sumar)
+        botonSumar.place(x=30, y=90)
+        botonRestar = Button(f, text="Restar", command=cls.restar)
+        botonRestar.place(x=100, y=90)        
+        botonMul = Button(f, text="Multiplicar", command=cls.multiplicar)
+        botonMul.place(x=170, y=90)        
+        botonDiv = Button(f, text="Dividir", command=cls.dividir)
+        botonDiv.place(x=280, y=90)        
+        cls._result_label_ = Label(f, text="")
+        cls._result_label_.place(x=30, y=120)
+        
+    @classmethod
+    def sumar(cls):
+        complex_s1 = cls._complex1_.get()
+        complex_s2 = cls._complex2_.get()
+        try:
+            c1 = to_complex(complex_s1)
+            c2 = to_complex(complex_s2)
+            c3 = c1 + c2 
+            result_text = "Resultado = " + str(c3)
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"
+        cls._result_label_.config(text=result_text)
+        
+    @classmethod
+    def restar(cls):
+        complex_s1 = cls._complex1_.get()
+        complex_s2 = cls._complex2_.get()
+        try:
+            c1 = to_complex(complex_s1)
+            c2 = to_complex(complex_s2)
+            c3 = c1 - c2 
+            result_text = "Resultado = " + str(c3)
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"
+        cls._result_label_.config(text=result_text)
+        
+    @classmethod
+    def multiplicar(cls):
+        complex_s1 = cls._complex1_.get()
+        complex_s2 = cls._complex2_.get()
+        try:
+            c1 = to_complex(complex_s1)
+            c2 = to_complex(complex_s2)
+            c3 = c1 * c2 
+            result_text = "Resultado = " + str(c3)
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"
+        cls._result_label_.config(text=result_text)
+
+    @classmethod
+    def dividir(cls):
+        complex_s1 = cls._complex1_.get()
+        complex_s2 = cls._complex2_.get()
+        try:
+            c1 = to_complex(complex_s1)
+            c2 = to_complex(complex_s2)
+            c3 = c1 / c2 
+            result_text = "Resultado = " + str(c3)
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"
+        except DivideByZero:
+            result_text = "Número 2 no puede ser nulo"
+        cls._result_label_.config(text=result_text)
 
     @classmethod
     def oa(cls):

@@ -5,6 +5,8 @@ FULL_ROUND = pi * 2
 #Error esperado de conversion: 1%
 #(En realidad creo que es bastante menos, pero yo me considero feliz con 1%)
 
+class DivideByZero(Exception):
+    pass
 
 class ComplexNumber:
 
@@ -108,4 +110,44 @@ class ComplexNumber:
             return "[" + str(self.abs()) + ", " + str(self.phase()) + "]"
         else:
             return "(" + str(self.real()) + ", " + str(self.imaginary()) + ")"
-
+            
+    def __add__(self, other): 
+        self.complete_attr(1)
+        other.complete_attr(1)
+        return ComplexNumber.binomial(self._real+other._real, self._imag+other._imag)
+    
+    def __radd__(self, other): 
+        self.complete_attr(1)
+        other.complete_attr(1)
+        return ComplexNumber.binomial(self._real+other._real, self._imag+other._imag)
+    
+    def __sub__(self, other):
+        self.complete_attr(1)
+        other.complete_attr(1)
+        return ComplexNumber.binomial(self._real-other._real, self._imag-other._imag)
+    
+    def __mul__(self, other):
+        self.complete_attr(2)
+        other.complete_attr(2)
+        return ComplexNumber.polar_with_decimal(self._abs*other._abs, self._phase+other._phase)
+        
+        # Return en polares
+        # return ComplexNumber.binomial(self._real*other._real-self._imag*other._imag, 
+        #                              self._real*other._imag+self._imag*other._real)
+        
+    def __truediv__(self, other):
+        self.complete_attr(2)
+        other.complete_attr(2)
+        if other._abs == 0:
+            raise DivideByZero()
+        return ComplexNumber.polar_with_decimal(self._abs/other._abs, self._phase-other._phase)
+        
+    # Este metodo completa los atributos necesarios para la operacion
+    def complete_attr(self,to):
+        if self._saved_as == 1 and to == 2:         # Binomica, completa polares
+            self._set_abs()
+            self._set_phase()
+        elif self._saved_as == 2 and to == 1:       # Polar, completa binomica
+            self._set_real()
+            self._set_imag() 
+            

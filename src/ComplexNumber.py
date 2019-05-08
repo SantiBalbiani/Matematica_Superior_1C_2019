@@ -164,3 +164,15 @@ class ComplexNumber:
             return ComplexNumber.polar_with_decimal(
                         self.abs()/other.abs(),
                         self.phase()-other.phase())
+
+    def n_th_root(self, n):
+        abs = self.abs() ** (1/n)
+
+        if self.pi_mult() is None:
+            phases = map(lambda k: (self.phase() + 2 * k * pi) / n, range(n))
+            ret = map(lambda phi: ComplexNumber.polar_with_decimal(abs, phi), phases)
+        else:
+            phases = map(lambda k: (self.pi_mult() + 2 * k) / n, range(n))
+            ret = map(lambda phi: ComplexNumber.polar_with_pi(abs, phi), phases)
+
+        return list(ret)

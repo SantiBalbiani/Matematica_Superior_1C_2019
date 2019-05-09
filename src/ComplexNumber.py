@@ -168,11 +168,22 @@ class ComplexNumber:
     def n_th_root(self, n):
         abs = self.abs() ** (1/n)
 
+        ret = self._get_n_th_root_(n, abs)
+
+        return ret
+
+    def _get_n_th_root_(self, n, abs):
         if self.pi_mult() is None:
             phases = map(lambda k: (self.phase() + 2 * k * pi) / n, range(n))
             ret = map(lambda phi: ComplexNumber.polar_with_decimal(abs, phi), phases)
         else:
             phases = map(lambda k: (self.pi_mult() + 2 * k) / n, range(n))
             ret = map(lambda phi: ComplexNumber.polar_with_pi(abs, phi), phases)
-
         return list(ret)
+
+    @classmethod
+    def root_of_unity(cls, n):
+        roots = ComplexNumber.binomial(1, 0).n_th_root(n)
+        pos_of_primitives = filter(lambda k: gcd(n, k) == 1, range(n))
+        primitives = map(lambda k: roots[k], pos_of_primitives)
+        return list(primitives)

@@ -33,4 +33,10 @@ class TestComplexNumber(unittest.TestCase):
             self.assertEqual(answ[i].abs(), res[i].abs())
             self.assertAlmostEqual(answ[i].phase(), res[i].phase(), delta=0.01)
 
+    def test_4_th_root_of_unity(self):
+        primitives = ComplexNumber.root_of_unity(4)
+        res = [ComplexNumber.polar_with_decimal(1, 0.5*pi), ComplexNumber.polar_with_decimal(1, 1.5*pi)]
+        self.assertEqual(primitives, res)
+
+
 

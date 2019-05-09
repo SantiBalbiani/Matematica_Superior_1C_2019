@@ -28,11 +28,10 @@ def to_complex(text):
         except ValueError:
             raise InvalidSintaxError
     elif elements[1].endswith("pi"):
-        if elements[1].count("pi") > 1:
-            raise InvalidSintaxError
-        pi_mult = elements[1].replace("pi", "")
+        pi_mult = elements[1].replace("pi", "", 1)
+        pi_mult = pi_mult if pi_mult != "" else 1
         try:
-            cmp = ComplexNumber.polar_with_pi(float(elements[0]), float(pi_mult))
+            cmp = ComplexNumber.polar_with_pi(float(elements[0]),  float(pi_mult))
         except ValueError:
             raise InvalidSintaxError
     else:

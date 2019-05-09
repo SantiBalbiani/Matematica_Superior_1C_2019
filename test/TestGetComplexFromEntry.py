@@ -39,6 +39,10 @@ class TestGetComplexFromEntry(unittest.TestCase):
         self.assertEqual(self.complex.abs(), 4.25)
         self.assertEqual(self.complex.pi_mult(), 1)
 
+    def test_polar_with_phase_0_is_pi_mult(self):
+        self.set_complex("[3, 0]")
+        self.assertEqual(self.complex.pi_mult(), 0)
+
     def test_invalid_with_to_pi(self):
         self.assertRaises(InvalidSintaxError, lambda: self.set_complex("[1,pipi]"))
 

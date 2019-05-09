@@ -166,6 +166,9 @@ class ComplexNumber:
                         self.phase()-other.phase())
 
     def n_th_root(self, n):
+        if n < 0:
+            raise ValueError
+
         abs = self.abs() ** (1/n)
 
         ret = self._get_n_th_root_(n, abs)
@@ -182,8 +185,13 @@ class ComplexNumber:
         return list(ret)
 
     @classmethod
-    def root_of_unity(cls, n):
-        roots = ComplexNumber.binomial(1, 0).n_th_root(n)
-        pos_of_primitives = filter(lambda k: gcd(n, k) == 1, range(n))
-        primitives = map(lambda k: roots[k], pos_of_primitives)
-        return list(primitives)
+    def roots_of_unity(cls, n, primitives_only=False):
+        if n < 0:
+            raise ValueError
+        roots = ComplexNumber.polar_with_pi(1, 0).n_th_root(n)
+        if primitives_only:
+            pos_of_primitives = filter(lambda k: gcd(n, k) == 1, range(n))
+            primitives = map(lambda k: roots[k], pos_of_primitives)
+            return list(primitives)
+        else:
+            return roots

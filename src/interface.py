@@ -142,7 +142,65 @@ class Interface:
 
     @classmethod
     def oa(cls):
-        None
+        cls.set_frame()
+        f = cls._frame_
+        titulo = Label(f, text="Operaciones Avanzadas"'\n')
+        titulo.place(x=0, y=0)
+        texto1 = Label(f, text="Numero: ")
+        texto1.place(x=0, y=25)
+        cls._complex_ = Entry(f)
+        cls._complex_.place(x=70, y=25)        
+        texto2 = Label(f, text="Exponente: ")
+        texto2.place(x=0, y=50)
+        cls._natural_ = Entry(f)
+        cls._natural_.place(x=70, y=50)
+        botonPot = Button(f, text="Potencia", command=cls.potencia)
+        botonPot.place(x=30, y=90)
+        botonRaiz = Button(f, text="Raiz", command=cls.raiz)
+        botonRaiz.place(x=100, y=90)        
+        botonRE = Button(f, text="Raices n-ésimas", command=cls.necimas)
+        botonRE.place(x=200, y=45)     
+        botonRP = Button(f, text="Primitivas n-ésimas", command=cls.necimas)
+        botonRP.place(x=300, y=45) 
+        cls._result_label_ = Label(f, text="")
+        cls._result_label_.place(x=30, y=120)
+        
+    @classmethod
+    def potencia(cls):
+        complex1 = cls._complex_.get()
+        natural = cls._natural_.get()
+        try:
+            c1 = to_complex(complex1)            
+            n = float(natural)
+            c2 = c1**n
+            result_text = "Resultado = " + str(c2)
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"          
+        cls._result_label_.config(text=result_text)        
+
+    @classmethod
+    def raiz(cls):
+        complex1 = cls._complex_.get()
+        natural = cls._natural_.get()
+        try:
+            c1 = to_complex(complex1)            
+            n = int(natural)
+            result_text = "Resultado = " + str(c1.n_th_root(n))
+        except InvalidSintaxError:
+            result_text = "El formato de ingreso no es valido"   
+        except ValueError:
+            result_text = "El exponente debe ser positivo"   
+        cls._result_label_.config(text=result_text)   
+        
+    @classmethod
+    def necimas(cls):
+        natural = cls._natural_.get()
+        try:            
+            n = int(natural)
+            result_text = "Resultado = " + str(ComplexNumber.roots_of_unity(n,False)) 
+        except ValueError:
+            result_text = "El exponente debe ser positivo"   
+        cls._result_label_.config(text=result_text)         
 
     @classmethod
     def sf(cls):

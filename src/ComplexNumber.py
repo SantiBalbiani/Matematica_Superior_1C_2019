@@ -163,7 +163,16 @@ class ComplexNumber:
             return ComplexNumber.polar_with_decimal(
                         self.abs()/other.abs(),
                         self.phase()-other.phase())
-
+            
+    def __pow__(self, n):
+        if self.pi_mult() is not None:
+            return ComplexNumber.polar_with_pi(
+                self.abs()**n,
+                self.pi_mult()*n)
+        return ComplexNumber.polar_with_decimal(
+                        self.abs()**n,
+                        self.phase()*n)
+        
     def n_th_root(self, n):
         if n < 0:
             raise ValueError

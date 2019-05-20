@@ -160,7 +160,7 @@ class Interface:
         botonRaiz.place(x=100, y=90)        
         botonRE = Button(f, text="Raices n-ésimas", command=cls.necimas)
         botonRE.place(x=200, y=45)     
-        botonRP = Button(f, text="Primitivas n-ésimas", command=cls.necimas)
+        botonRP = Button(f, text="Primitivas n-ésimas", command=cls.necimasunity)
         botonRP.place(x=300, y=45) 
         cls._result_label_ = Label(f, text="")
         cls._result_label_.place(x=30, y=120)
@@ -200,7 +200,17 @@ class Interface:
             result_text = "Resultado = " + str(ComplexNumber.roots_of_unity(n,False)) 
         except ValueError:
             result_text = "El exponente debe ser positivo"   
-        cls._result_label_.config(text=result_text)         
+        cls._result_label_.config(text=result_text)
+
+    @classmethod
+    def necimasunity(cls):
+        natural = cls._natural_.get()
+        try:            
+            n = int(natural)
+            result_text = "Resultado = " + str(ComplexNumber.roots_of_unity(n,True)) 
+        except ValueError:
+            result_text = "El exponente debe ser positivo"   
+        cls._result_label_.config(text=result_text)              
 
     @classmethod
     def sf(cls):

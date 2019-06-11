@@ -203,3 +203,9 @@ class ComplexNumber:
             return list(primitives)
         else:
             return roots
+
+    def add_pi(self, multiplier):
+        if self.pi_mult() is None:
+            return ComplexNumber.polar_with_decimal(self.abs(), self.phase() + pi*multiplier)
+        else:
+            return ComplexNumber.polar_with_pi(self.abs(), self.pi_mult() + multiplier)

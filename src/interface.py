@@ -1,6 +1,8 @@
 from tkinter import *
+import tkinter.ttk as tkk
 from src.ToComplex import *
 from src.ComplexNumber import *
+from src.FasoresChecks import *
 
 
 class Interface:
@@ -214,5 +216,54 @@ class Interface:
 
     @classmethod
     def sf(cls):
-        None
+        cls.set_frame()
+        f = cls._frame_
+        titulo = Label(f, text="Suma de fasores"'\n')
+        titulo.place(x=0, y=0)
+        texto1 = Label(f, text="Funcion A: ")
+        texto1.place(x=0, y=25)
+        cls._amplitudA_ = Entry(f)
+        cls._amplitudA_.place(x=70, y=25)
+        cls._funcionA_ = tkk.Combobox(f, state="readonly")
+        cls._funcionA_["values"] = ["SIN", "COS"]
+        cls._funcionA_.set("SIN")
+        cls._funcionA_.place(x=200, y=25)
+        cls._frecuenciaA_ = Entry(f)
+        cls._frecuenciaA_.place(x=300, y=25)
+        cls._corrimientoA_ = Entry(f)
+        cls._corrimientoA_.place(x=430, y=25)
+        texto2 = Label(f, text="Funcion B: ")
+        texto2.place(x=0, y=50)
+        cls._amplitudB_ = Entry(f)
+        cls._amplitudB_.place(x=70, y=50)
+        cls._funcionB_ = tkk.Combobox(f, state="readonly")
+        cls._funcionB_["values"] = ["SIN", "COS"]
+        cls._funcionB_.set("SIN")
+        cls._funcionB_.place(x=200, y=50)
+        cls._frecuenciaB_ = Entry(f)
+        cls._frecuenciaB_.place(x=300, y=50)
+        cls._corrimientoB_ = Entry(f)
+        cls._corrimientoB_.place(x=430, y=50)
+        boton = Button(f, text="Sumar", command=cls.sumaFasores)
+        boton.place(x=0, y=70)
+        cls._result_label_ = Label(f, text="")
+        cls._result_label_.place(x=30, y=120)
 
+    @classmethod
+    def sumaFasores(cls):
+        try:
+            fasorA = to_fasor(cls._amplitudA_.get(), cls._corrimientoA_.get())
+            fasorB = to_fasor(cls._amplitudB_.get(), cls._corrimientoB_.get())
+            frecuenciaA = to_frecuencia(cls._frecuenciaA_.get())
+            frecuenciaB = to_frecuencia(cls._frecuenciaB_.get())
+            tipoA = to_tipo(cls._funcionA_.current()+1)
+            tipoB = to_tipo(cls._funcionB_.current()+1)
+            funcionA = TrigonometricFunction(tipoA, frecuenciaA, fasorA)
+            funcionB = TrigonometricFunction(tipoB, frecuenciaB, fasorB)
+            result_text = "Resultado = " + str(funcionA.sumar_fasores(funcionB))
+        except InvalidSintaxError:
+            result_text = "Los numeros ingresados no son numero validos"
+        except FrecuenciaDiferenteException:
+            result_text = "Las funciones no tienen misma frecuencia"
+
+        cls._result_label_.config(text=result_text)

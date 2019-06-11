@@ -1,8 +1,5 @@
 from src.ComplexNumber import ComplexNumber
-
-
-class InvalidSintaxError(Exception):
-    pass
+from src.InvalidSintaxError import *
 
 
 def to_complex(text):

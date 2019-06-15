@@ -25,8 +25,9 @@ class Interface:
         subMenu.add_command(label="SF", command=cls.sf)
         subMenu.add_separator()
         subMenu.add_command(label="Exit", command=raiz.destroy)
-        textoMain = Label(raiz, text="TP MATEMATICA SUPERIOR"'\n' '\n' "GRUPO MIXTO 2", font=("Calibri", 20))
-        textoMain.place(x=100, y=0)
+        textoMain = Label(raiz, text="Trabajo Práctico Matemática Superior"'\n' '\n' "Operaciones con Nros Complejos" '\n' "Grupo Mixto 2", font=("Arial, 25"))
+        
+        textoMain.place(x=325, y=150, anchor="center")
 
         raiz.mainloop()
 
@@ -36,21 +37,22 @@ class Interface:
         cls._frame_ = Frame()
         cls._frame_.pack()
         cls._frame_.config(bg="beige")
-        cls._frame_.config(width="650", height="400")
+        cls._frame_.config(width="650", height="500")
 
     @classmethod
     def edt(cls):
         cls.set_frame()
         f = cls._frame_
-        titulo = Label(f, text="Ingresar los datos"'\n')  # label y su ubicacion
-        titulo.place(x=0, y=0)
-        texto = Label(f, text="Numero")
+        titulo = Label(f, text="Ingrese en el cuadro de texto al número complejo que desea transformar:"'\n', font=("Arial, 14"))  # label y su ubicacion
+        titulo.place(x=15, y=25)
+        texto = Label(f, text="Número:" , font=("Arial, 12"))
+        texto.place(x=180,y=90)
         cls._complex1_ = Entry(f)
-        cls._complex1_.place(x=70, y=25)
-        botonEnviar = Button(f, text="Tranformar", command=cls.trans)
-        botonEnviar.place(x=30, y=90)
-        cls._result_label_ = Label(f, text="")
-        cls._result_label_.place(x=10, y=130)
+        cls._complex1_.place(x=325, y=100, anchor="center")
+        botonEnviar = Button(f, text="Transformar", font=("Arial, 16"), command=cls.trans)
+        botonEnviar.place(x=250, y=150)
+        cls._result_label_ = Label(f, text="", font=("Arial, 18"))
+        cls._result_label_.place(x=80, y=220)
 
     @classmethod
     def trans(cls):
